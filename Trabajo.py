@@ -1,3 +1,5 @@
+from os import system
+import random
 #TRABAJO FINAL ESTRUCTURAS DE DATOS
 """
 INTEGRANTES:
@@ -12,25 +14,206 @@ Fuente del lemario: https://gist.github.com/deekayen/4148741
 
 original=open('1-1000.txt', mode='r')
 
-lemario={4:set(), 5:set(), 6:set(), 7:set(), 8:set()} #Este diccionario contendrá el lemario, cada clave guarda las palabras con un determinado numero de digitos
+lemario={4:list(), 5:list(), 6:list(), 7:list(), 8:list()} #Este diccionario contendrá el lemario, cada clave guarda las palabras con un determinado numero de digitos
 
 for palabra in original:
-    if '\'' in palabra:  #Es posible que las palabras tengan el caractr ', por simplicidad estas palabras no se toman en el lemario
+    if '\'' in palabra:  #Es posible que las palabras tengan el caracter ', por simplicidad estas palabras no se toman en el lemario
         continue   
     elif len(palabra)==5:
         palabra=palabra[:-1]
-        lemario[4].add(palabra.upper())
+        lemario[4].append(palabra.upper())
     elif len(palabra)==6:
         palabra=palabra[:-1]
-        lemario[5].add(palabra.upper())
+        lemario[5].append(palabra.upper())
     elif len(palabra)==7:
         palabra=palabra[:-1]
-        lemario[6].add(palabra.upper())
+        lemario[6].append(palabra.upper())
     elif len(palabra)==8:
         palabra=palabra[:-1]
-        lemario[7].add(palabra.upper())
+        lemario[7].append(palabra.upper())
     elif len(palabra)==9:
         palabra=palabra[:-1]
-        lemario[8].add(palabra.upper())
-original.close()
-print(lemario)
+        lemario[8].append(palabra.upper())
+
+original.close() #Se cierra el archivo original
+
+#Definición de variables
+
+aciertos=0 #Esta variable guarda los aciertos para mostrarlos en pantalla
+fallos=0 #Esta variable guarda los fallos para mostrarlos en pantalla
+
+#Aqui comienza el juego
+while True: #Ciclo general
+    print('Bienvenido a wordle, selecciona una opción (escribe el numero correspondiente):')
+    print('1. Nueva partida')
+    print('2. Salir del juego')
+    print('aciertos:', aciertos, 'fallos:', fallos)
+    opcion=str(input())
+    if opcion=='2': #Esta opcion termina el programa definitivamente
+        break
+    elif opcion=='1': #Esto continua el juego
+        system("cls")
+        print('Seleccione un nivel de dificultad:')
+        print('1. 4 letras')
+        print('2. 5 letras')
+        print('3. 6 letras')
+        print('4. 7 letras')
+        print('5. 8 letras')
+        dificultad=str(input())
+
+        if dificultad=='1': #se inicia un juego con 4 letras
+            palabra=random.choice(lemario[4]) #se selecciona palabra aleatoria del lemario
+            print(palabra) #BORRAR, ES PARA PRUEBAS
+            for i in range(6): #dibujar un tablero de 6 filas que es el estandar de oportunidades y 4 columnas que corresponden a las letras
+                for j in range(4):
+                    print('🔲', end='')
+                print()
+            print('aciertos:', aciertos, 'fallos:', fallos)
+            print("tiene 6 intentos para descubrir la palabra")
+            for i in range(6): #aqui comienza el ciclo de intentos
+                intento=str(input()).upper()
+                for i in range(4): #Se imprime un cuadrado verde si la letra esta en el lugar correcto, uno amarillo si la letra no esta en el lugar correcto y uno negro si la letra no esta en la palabra, se sale del ciclo cuando terminan los intentos o acierta
+                    if intento[i] in palabra:
+                        if intento[i]==palabra[i]:
+                            print('🟩', end='')
+                        else:
+                            print('🟨', end='')
+                    else:
+                        print('⬛', end='')
+                print()
+                if intento==palabra: #si se introduce la palabra correcta se añade un punto a aciertos
+                        print('GANASTE!')
+                        aciertos+=1
+                        break
+            if intento!=palabra: #si no se logra adivinar se agrega un fallo
+                print('PERDISTE :(')
+                fallos+=1
+            print('presiona cualquier tecla')
+            input()
+
+        elif dificultad=='2': #se inicia un juego con 5 letras
+            palabra=random.choice(lemario[5]) #se selecciona palabra aleatoria del lemario
+            print(palabra) #BORRAR, ES PARA PRUEBAS
+            for i in range(6): #dibujar un tablero de 6 filas que es el estandar de oportunidades y 5 columnas que corresponden a las letras
+                for j in range(5):
+                    print('🔲', end='')
+                print()
+            print('aciertos:', aciertos, 'fallos:', fallos)
+            print("tiene 6 intentos para descubrir la palabra")
+            for i in range(6): #aqui comienza el ciclo de intentos
+                intento=str(input()).upper()
+                for i in range(5): #Se imprime un cuadrado verde si la letra esta en el lugar correcto, uno amarillo si la letra no esta en el lugar correcto y uno negro si la letra no esta en la palabra, se sale del ciclo cuando terminan los intentos o acierta
+                    if intento[i] in palabra:
+                        if intento[i]==palabra[i]:
+                            print('🟩', end='')
+                        else:
+                            print('🟨', end='')
+                    else:
+                        print('⬛', end='')
+                print()
+                if intento==palabra: #si se introduce la palabra correcta se añade un punto a aciertos
+                        print('GANASTE!')
+                        aciertos+=1
+                        break
+            if intento!=palabra: #si no se logra adivinar se agrega un fallo
+                print('PERDISTE :(')
+                fallos+=1
+            print('presiona cualquier tecla')
+            input()
+
+        elif dificultad=='3': #se inicia un juego con 6 letras
+            palabra=random.choice(lemario[6]) #se selecciona palabra aleatoria del lemario
+            print(palabra) #BORRAR, ES PARA PRUEBAS
+            for i in range(6): #dibujar un tablero de 6 filas que es el estandar de oportunidades y 6 columnas que corresponden a las letras
+                for j in range(6):
+                    print('🔲', end='')
+                print()
+            print('aciertos:', aciertos, 'fallos:', fallos)
+            print("tiene 6 intentos para descubrir la palabra")
+            for i in range(6): #aqui comienza el ciclo de intentos
+                intento=str(input()).upper()
+                for i in range(6): #Se imprime un cuadrado verde si la letra esta en el lugar correcto, uno amarillo si la letra no esta en el lugar correcto y uno negro si la letra no esta en la palabra, se sale del ciclo cuando terminan los intentos o acierta
+                    if intento[i] in palabra:
+                        if intento[i]==palabra[i]:
+                            print('🟩', end='')
+                        else:
+                            print('🟨', end='')
+                    else:
+                        print('⬛', end='')
+                print()
+                if intento==palabra: #si se introduce la palabra correcta se añade un punto a aciertos
+                        print('GANASTE!')
+                        aciertos+=1
+                        break
+            if intento!=palabra: #si no se logra adivinar se agrega un fallo
+                print('PERDISTE :(')
+                fallos+=1
+            print('presiona cualquier tecla')
+            input()
+        
+        elif dificultad=='4': #se inicia un juego con 7 letras
+            palabra=random.choice(lemario[7]) #se selecciona palabra aleatoria del lemario
+            print(palabra) #BORRAR, ES PARA PRUEBAS
+            for i in range(6): #dibujar un tablero de 6 filas que es el estandar de oportunidades y 7 columnas que corresponden a las letras
+                for j in range(7):
+                    print('🔲', end='')
+                print()
+            print('aciertos:', aciertos, 'fallos:', fallos)
+            print("tiene 6 intentos para descubrir la palabra")
+            for i in range(6): #aqui comienza el ciclo de intentos
+                intento=str(input()).upper()
+                for i in range(7): #Se imprime un cuadrado verde si la letra esta en el lugar correcto, uno amarillo si la letra no esta en el lugar correcto y uno negro si la letra no esta en la palabra, se sale del ciclo cuando terminan los intentos o acierta
+                    if intento[i] in palabra:
+                        if intento[i]==palabra[i]:
+                            print('🟩', end='')
+                        else:
+                            print('🟨', end='')
+                    else:
+                        print('⬛', end='')
+                print()
+                if intento==palabra: #si se introduce la palabra correcta se añade un punto a aciertos
+                        print('GANASTE!')
+                        aciertos+=1
+                        break
+            if intento!=palabra: #si no se logra adivinar se agrega un fallo
+                print('PERDISTE :(')
+                fallos+=1
+            print('presiona cualquier tecla')
+            input()
+        
+        elif dificultad=='5': #se inicia un juego con 8 letras
+            palabra=random.choice(lemario[8]) #se selecciona palabra aleatoria del lemario
+            print(palabra) #BORRAR, ES PARA PRUEBAS
+            for i in range(6): #dibujar un tablero de 6 filas que es el estandar de oportunidades y 8 columnas que corresponden a las letras
+                for j in range(8):
+                    print('🔲', end='')
+                print()
+            print('aciertos:', aciertos, 'fallos:', fallos)
+            print("tiene 6 intentos para descubrir la palabra")
+            for i in range(6): #aqui comienza el ciclo de intentos
+                intento=str(input()).upper()
+                for i in range(8): #Se imprime un cuadrado verde si la letra esta en el lugar correcto, uno amarillo si la letra no esta en el lugar correcto y uno negro si la letra no esta en la palabra, se sale del ciclo cuando terminan los intentos o acierta
+                    if intento[i] in palabra:
+                        if intento[i]==palabra[i]:
+                            print('🟩', end='')
+                        else:
+                            print('🟨', end='')
+                    else:
+                        print('⬛', end='')
+                print()
+                if intento==palabra: #si se introduce la palabra correcta se añade un punto a aciertos
+                        print('GANASTE!')
+                        aciertos+=1
+                        break
+            if intento!=palabra: #si no se logra adivinar se agrega un fallo
+                print('PERDISTE :(')
+                fallos+=1
+            print('presiona cualquier tecla')
+            input()
+        
+        else: #Opcion para manejo de errores
+            continue
+        
+    else: #Opcion para que no lance error el juego
+        continue
+    system("cls")
