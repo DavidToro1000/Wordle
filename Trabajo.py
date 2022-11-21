@@ -106,17 +106,18 @@ while True: #Ciclo general
         print('3. 6 letras')
         print('4. 7 letras')
         print('5. 8 letras')
-        dificultad=int(input())+3
-
-        if (dificultad > 3) and (dificultad < 9):
-            juego(dificultad)
+        dificultad = input()
+        if dificultad.isdigit():
+            dificultad = int(dificultad)
+            dificultad+=3
+            if (dificultad > 3) and (dificultad < 9):
+                juego(dificultad)
+            else:
+                print("Ese valor no está permitido ...")
+                continue
         else:
             print("Ese valor no está permitido ...")
             continue
-        
-    else: #Opcion para que no lance error el juego
-        continue
-
     #Impelementa método mimimi
     
     system("cls")
