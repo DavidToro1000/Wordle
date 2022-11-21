@@ -57,12 +57,19 @@ def juego(dificultad):
             print(f"La palabra debe contener: {dificultad} letras")
             intento=str(input()).upper()
 
+        for i in range(dificultad):
+            verde = set()
+            if intento[i] == palabra[i]:
+                verde.add(intento[i])
+
         for i in range(dificultad): #Se imprime un cuadrado verde si la letra esta en el lugar correcto, uno amarillo si la letra no esta en el lugar correcto y uno negro si la letra no esta en la palabra, se sale del ciclo cuando terminan los intentos o acierta
             if intento[i] in palabra:
                 if intento[i]==palabra[i]:
                     print('🟩', end='')
-                else:
+                elif intento[i] != palabra[i] and intento[i] not in verde:
                     print('🟨', end='')
+                elif intento[i] != palabra[i] and intento[i] in verde:
+                    print('⬛', end='')
             else:
                 print('⬛', end='')
         print()
