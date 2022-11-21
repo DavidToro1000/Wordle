@@ -8,13 +8,32 @@ MANUEL GALLEGO
 CARLOS DAVID ARANGO
 JERONIMO GOMEZ RESTREPO
 
-Fuente del lemario: https://gist.github.com/deekayen/4148741
+Fuente del lemario: https://github.com/first20hours/google-10000-english/blob/master/google-10000-english.txt
 """
 #Importacion del lemario (1000 palabras en ingles)
 
-original=open('1-1000.txt', mode='r')
+original=open('1-10000.txt', mode='r')
 
 lemario={4:list(), 5:list(), 6:list(), 7:list(), 8:list()} #Este diccionario contendrá el lemario, cada clave guarda las palabras con un determinado numero de digitos
+
+for palabra in original:
+    if '\'' in palabra:  #Es posible que las palabras tengan el caracter ', por simplicidad estas palabras no se toman en el lemario
+        continue   
+    elif len(palabra)==5:
+        palabra=palabra[:-1]
+        lemario[4].append(palabra.upper())
+    elif len(palabra)==6:
+        palabra=palabra[:-1]
+        lemario[5].append(palabra.upper())
+    elif len(palabra)==7:
+        palabra=palabra[:-1]
+        lemario[6].append(palabra.upper())
+    elif len(palabra)==8:
+        palabra=palabra[:-1]
+        lemario[7].append(palabra.upper())
+    elif len(palabra)==9:
+        palabra=palabra[:-1]
+        lemario[8].append(palabra.upper())
 
 #Función que ejecuta el juego según la dificultad seleccionada
 def juego(dificultad):
@@ -57,27 +76,6 @@ def juego(dificultad):
     print('presiona cualquier tecla')
     input()
 
-for palabra in original:
-    if '\'' in palabra:  #Es posible que las palabras tengan el caracter ', por simplicidad estas palabras no se toman en el lemario
-        continue   
-    elif len(palabra)==5:
-        palabra=palabra[:-1]
-        lemario[4].append(palabra.upper())
-    elif len(palabra)==6:
-        palabra=palabra[:-1]
-        lemario[5].append(palabra.upper())
-    elif len(palabra)==7:
-        palabra=palabra[:-1]
-        lemario[6].append(palabra.upper())
-    elif len(palabra)==8:
-        palabra=palabra[:-1]
-        lemario[7].append(palabra.upper())
-    elif len(palabra)==9:
-        palabra=palabra[:-1]
-        lemario[8].append(palabra.upper())
-
-original.close() #Se cierra el archivo original
-
 #Definición de variables
 
 aciertos=0 #Esta variable guarda los aciertos para mostrarlos en pantalla
@@ -111,4 +109,7 @@ while True: #Ciclo general
         
     else: #Opcion para que no lance error el juego
         continue
+
+    #Impelementa método mimimi
+    
     system("cls")
