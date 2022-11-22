@@ -10,7 +10,7 @@ JERONIMO GOMEZ RESTREPO
 
 Fuente del lemario: https://github.com/first20hours/google-10000-english/blob/master/google-10000-english.txt
 """
-#Importacion del lemario (1000 palabras en ingles)
+#Importacion del lemario (10000 palabras en ingles)
 
 original=open('1-10000.txt', mode='r')
 
@@ -41,30 +41,27 @@ def juego(dificultad):
     global fallos
 
     palabra=random.choice(lemario[dificultad]) #se selecciona palabra aleatoria del lemario
-
-    print(palabra) #BORRAR, ES PARA PRUEBAS
     
-    for i in range(6): #dibujar un tablero de 6 filas que es el estandar de oportunidades y 4 columnas que corresponden a las letras
+    for i in range(6): #dibujar un tablero de 6 filas que es el estandar de oportunidades y la columnas que corresponden a las letras de la dificultad
         for j in range(dificultad):
             print('🔲', end='')
         print()
-    print('aciertos:', aciertos, 'fallos:', fallos)
+    print('aciertos:', aciertos, 'fallos:', fallos) #Imprime el contador de aciertos y fallos en pantalla
     print("tiene 6 intentos para descubrir la palabra")
     for i in range(6): #aqui comienza el ciclo de intentos
-        intento=str(input()).upper()
+        intento=str(input()).upper() #Se pone en mayuscula el intento para normalizarlo y que los caracteres hagan match
 
-        while not (len(intento) == dificultad):
+        while not (len(intento) == dificultad): #pequeño ciclo para manejo de errores
             print(f"La palabra debe contener: {dificultad} letras")
             intento=str(input()).upper()
 
         verde = set() #En este set se guardan las letras que estan en el lugar correcto
-        cantidad={} #En este diccionario se guardan la cantidad de ocurrencia de las letras en el intento
+        cantidad={} #En este diccionario se guardan la cantidad de ocurrencia de las letras en el intento y la cantidad de letras en la palabra correcta, esto se usa para que no imprima mas cuadros amarillos que la cantidad de x letra en la palabra correcta
         for i in range(dificultad):
             if intento[i] == palabra[i] and intento[i] :
                 verde.add(intento[i])
 
-
-        for i in range(dificultad): #Se imprime un cuadrado verde si la letra esta en el lugar correcto, uno amarillo si la letra no esta en el lugar correcto y uno negro si la letra no esta en la palabra, se sale del ciclo cuando terminan los intentos o acierta
+        for i in range(dificultad): #Se imprime un cuadrado verde si la letra esta en el lugar correcto, uno amarillo si la letra no esta en el lugar correcto y si no sobrepasa la cantidad de letras de la palabra original y uno negro si la letra no esta en la palabra o si hay mas letras de un tipo que en la palabra correcta, se sale del ciclo cuando terminan los intentos o acierta
             if intento[i] in palabra:
                 if intento[i] not in cantidad:
                     cantidad[intento[i]]=[intento.count(intento[i]), palabra.count(intento[i])]
@@ -77,8 +74,6 @@ def juego(dificultad):
                 elif intento[i] != palabra[i] and cantidad[intento[i]][0]<=cantidad[intento[i]][1]:
                     print('🟨', end='')
                     cantidad[intento[i]][0]-=1
-                #elif intento[i] != palabra[i] and intento[i] not in verde:
-                    #print('🟨', end='')
                 elif intento[i]==palabra[i]:
                     print('🟩', end='')
                     cantidad[intento[i]][0]-=1
@@ -95,6 +90,7 @@ def juego(dificultad):
                 break
     if intento!=palabra: #si no se logra adivinar se agrega un fallo
         print('PERDISTE :(')
+        print('La palabra correcta era:', palabra)
         fallos+=1
     print('presiona cualquier tecla')
     input()
@@ -126,7 +122,7 @@ while True: #Ciclo general
         if dificultad.isdigit():
             dificultad = int(dificultad)
             dificultad+=3
-            if (dificultad > 3) and (dificultad < 9):
+            if (dificultad > 3) and (dificultad < 9): #Ejecuta el juego
                 juego(dificultad)
             else:
                 print("Ese valor no está permitido ...")
