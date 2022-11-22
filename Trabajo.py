@@ -57,20 +57,35 @@ def juego(dificultad):
             print(f"La palabra debe contener: {dificultad} letras")
             intento=str(input()).upper()
 
-        verde = set()
+        verde = set() #En este set se guardan las letras que estan en el lugar correcto
+        cantidad={} #En este diccionario se guardan la cantidad de ocurrencia de las letras en el intento
         for i in range(dificultad):
-            if intento[i] == palabra[i]:
+            if intento[i] == palabra[i] and intento[i] :
                 verde.add(intento[i])
 
 
         for i in range(dificultad): #Se imprime un cuadrado verde si la letra esta en el lugar correcto, uno amarillo si la letra no esta en el lugar correcto y uno negro si la letra no esta en la palabra, se sale del ciclo cuando terminan los intentos o acierta
             if intento[i] in palabra:
-                if intento[i] != palabra[i] and intento[i] in verde:
-                    print('⬛', end='')
-                elif intento[i] != palabra[i] and intento[i] not in verde:
+                if intento[i] not in cantidad:
+                    cantidad[intento[i]]=[intento.count(intento[i]), palabra.count(intento[i])]
+                if intento[i] != palabra[i] and intento[i] in verde and cantidad[intento[i]][0]<=cantidad[intento[i]][1]:
                     print('🟨', end='')
+                    cantidad[intento[i]][0]-=1
+                elif intento[i] != palabra[i] and intento[i] in verde:
+                    print('⬛', end='')
+                    cantidad[intento[i]][0]-=1
+                elif intento[i] != palabra[i] and cantidad[intento[i]][0]<=cantidad[intento[i]][1]:
+                    print('🟨', end='')
+                    cantidad[intento[i]][0]-=1
+                #elif intento[i] != palabra[i] and intento[i] not in verde:
+                    #print('🟨', end='')
                 elif intento[i]==palabra[i]:
                     print('🟩', end='')
+                    cantidad[intento[i]][0]-=1
+                    cantidad[intento[i]][1]-=1
+                else:
+                    print('⬛', end='')
+                    cantidad[intento[i]][0]-=1
             else:
                 print('⬛', end='')
         print()
