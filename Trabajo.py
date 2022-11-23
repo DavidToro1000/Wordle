@@ -16,7 +16,7 @@ original=open('1-10000.txt', mode='r')
 
 lemario={4:list(), 5:list(), 6:list(), 7:list(), 8:list()} #Este diccionario contendrá el lemario, cada clave guarda las palabras con un determinado numero de digitos
 
-for palabra in original:
+for palabra in original:  # O(N)
     if '\'' in palabra:  #Es posible que las palabras tengan el caracter ', por simplicidad estas palabras no se toman en el lemario
         continue   
     elif len(palabra)==5:
@@ -42,13 +42,14 @@ def juego(dificultad):
 
     palabra=random.choice(lemario[dificultad]) #se selecciona palabra aleatoria del lemario
     
-    for i in range(6): #dibujar un tablero de 6 filas que es el estandar de oportunidades y la columnas que corresponden a las letras de la dificultad
+    for i in range(6): #O(N)   dibujar un tablero de 6 filas que es el estandar de oportunidades y la columnas que corresponden a las letras de la dificultad
         for j in range(dificultad):
             print('🔲', end='')
         print()
     print('aciertos:', aciertos, 'fallos:', fallos) #Imprime el contador de aciertos y fallos en pantalla
     print("tiene 6 intentos para descubrir la palabra")
-    for i in range(6): #aqui comienza el ciclo de intentos
+
+    for i in range(6): #aqui comienza el ciclo de intentos O(N)
         intento=str(input()).upper() #Se pone en mayuscula el intento para normalizarlo y que los caracteres hagan match
 
         while not (len(intento) == dificultad): #pequeño ciclo para manejo de errores
@@ -57,11 +58,11 @@ def juego(dificultad):
 
         verde = set() #En este set se guardan las letras que estan en el lugar correcto
         cantidad={} #En este diccionario se guardan la cantidad de ocurrencia de las letras en el intento y la cantidad de letras en la palabra correcta, esto se usa para que no imprima mas cuadros amarillos que la cantidad de x letra en la palabra correcta
-        for i in range(dificultad):
+        for i in range(dificultad): # O(N)
             if intento[i] == palabra[i] and intento[i] :
                 verde.add(intento[i])
 
-        for i in range(dificultad): #Se imprime un cuadrado verde si la letra esta en el lugar correcto, uno amarillo si la letra no esta en el lugar correcto y si no sobrepasa la cantidad de letras de la palabra original y uno negro si la letra no esta en la palabra o si hay mas letras de un tipo que en la palabra correcta, se sale del ciclo cuando terminan los intentos o acierta
+        for i in range(dificultad): #O(N) #Se imprime un cuadrado verde si la letra esta en el lugar correcto, uno amarillo si la letra no esta en el lugar correcto y si no sobrepasa la cantidad de letras de la palabra original y uno negro si la letra no esta en la palabra o si hay mas letras de un tipo que en la palabra correcta, se sale del ciclo cuando terminan los intentos o acierta
             if intento[i] in palabra:
                 if intento[i] not in cantidad:
                     cantidad[intento[i]]=[intento.count(intento[i]), palabra.count(intento[i])]
@@ -101,7 +102,7 @@ aciertos=0 #Esta variable guarda los aciertos para mostrarlos en pantalla
 fallos=0 #Esta variable guarda los fallos para mostrarlos en pantalla
 
 #Aqui comienza el juego
-while True: #Ciclo general
+while True: #Ciclo general O(N)
     print('Bienvenido a wordle, selecciona una opción (escribe el numero correspondiente):')
     print('1. Nueva partida')
     print('2. Salir del juego')
